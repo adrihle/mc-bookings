@@ -2,6 +2,7 @@
   "name": "bookings",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:4000",
   "dependencies": {
     "@material-ui/core": "^4.4.0",
     "@material-ui/icons": "^4.2.1",
@@ -24,6 +25,7 @@
     "react-scripts": "3.1.1"
   },
   "scripts": {
+    "ini": "concurrently \"npm run dev\" \"npm run start\"",
     "dev": "nodemon src/server/restapi.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -46,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "concurrently": "^4.1.2",
     "nodemon": "^1.19.2"
   }
 }
