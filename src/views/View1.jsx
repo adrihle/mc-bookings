@@ -9,6 +9,8 @@ import Confirmation from '../components/Confirmation'
 import Autocomplete from '../components/Autocomplete'
 import UserInfo from '../components/UserInfo'
 import ItemsTable from '../components/ItemsTable'
+import DepositsTable from '../components/DepositsTable'
+import Total from '../components/Total'
 import axios from 'axios'
 var emitter = require('../config/global_emitter')
 
@@ -91,7 +93,12 @@ export default function View1(){
                 <Grid item xs={3}>
                     <div className='bg-white rounded shadow p-2 ml-3 mt-3'>
                         <Autocomplete update={update}/>
-                        {showUserInfo && (<UserInfo tlf={userInfo.tlf} email={userInfo.email} clubCode={userInfo.clubCode} />)}
+                        {showUserInfo && (
+                            <div>
+                                <UserInfo tlf={userInfo.tlf} email={userInfo.email} clubCode={userInfo.clubCode} />
+                                <Total userSelected={userSelected} />
+                            </div>
+                        )}
                     </div>
                     <Flip left when={hideAddUser}>
                         {hideAddUser && (<NewUser onClick={hideAddUserForm} onClose={closeAddUserForm}/>)}
@@ -102,7 +109,13 @@ export default function View1(){
                         <Roll right when={showItemsTable}>
                             {showItemsTable && (<ItemsTable  userSelected={userSelected} />)}
                         </Roll>
+                        <div className='mt-2'>
+                            <Roll left when={showItemsTable}>
+                                {showItemsTable && (<DepositsTable  userSelected={userSelected} />)}
+                            </Roll>
+                        </div>
                     </div>
+                    
                 </Grid>
                 <div className={classes.confirmation}>
                 <Flip left when={showConfirm}>

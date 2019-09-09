@@ -53,8 +53,9 @@ const authLogin = (rows, pass) => {
 
 app.post('/auth', (req, res) => {
     const { email, pass } = req.body
+    
     queryOneInputValue(queryLogin, email)
-    .then(async (rows) => {
+    .then((rows) => {
         return authLogin(rows, pass)
     })
     .then((e) => {
@@ -126,6 +127,27 @@ app.post('/updateItems', (req, res) => {
     const { items, name } = req.body
     pool.query(queryUpdateItems, [JSON.stringify(items), name], (err, rows) => {
         res.send(err)
+    })
+})
+
+//setup rest api for add customer deposit
+const queryInsertDeposits = 'UPDATE cb_customers SET deposits = ? WHERE name = ?'
+
+app.post('/updateDeposits', (req, res) => {
+    const { deposits, name } = req.body
+    pool.query(queryInsertDeposits, [JSON.stringify(deposits), name], (err, rows) => {
+        res.send(rows)
+    })
+})
+
+//rest api for get customer deposits
+const queryGetDeposits = 'SELECT deposits FROM cb_customers WHERE name = ?'
+
+app.post('/getDeposits', (req, res) => {
+    const { name } = req.body
+    queryOneInputValue(queryGetDeposits, name)
+    .then((e) => {
+        res.send(JSON.parse(e[0].deposits))
     })
 })
 
