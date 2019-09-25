@@ -7,6 +7,7 @@ export default function MaterialTableDemo(props) {
   const [state, setState] = useState({
     columns: [
       { title: 'Item', field: 'item' },
+      { title: 'Quantity', field: 'quantity', type: 'numeric' },
       { title: 'Description', field: 'description' },
       { title: 'Price', field: 'price', type: 'numeric' },
       {
@@ -44,6 +45,13 @@ export default function MaterialTableDemo(props) {
     })
   }
 
+  function addRow (newData) {
+        const data = [...state.data];
+        data.push(newData);
+        handleUpdate(data)
+        setState({ ...state, data });
+  }
+
 
   return (
     <MaterialTable
@@ -68,10 +76,7 @@ export default function MaterialTableDemo(props) {
           new Promise(resolve => {
             setTimeout(() => {
               resolve();
-              const data = [...state.data];
-              data.push(newData);
-              handleUpdate(data)
-              setState({ ...state, data });
+              addRow(newData)
             }, 600);
           }),
           onRowUpdate: (newData, oldData) =>

@@ -20,9 +20,11 @@ export default function Total (props) {
         axios.post('http://localhost:4000/getDeposits', upload)
         .then((e) => {
             var sum = 0
-            e.data.map(deposits => {
-                sum += parseFloat(deposits.quantity)
-            })
+            if (e.data !== ""){
+                e.data.map(deposits => {
+                    sum += parseFloat(deposits.quantity)
+                })
+            }
             setTotalD(sum)
         })
 

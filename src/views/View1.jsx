@@ -5,6 +5,7 @@ import Flip from 'react-reveal/Flip'
 import Roll from 'react-reveal/Roll'
 
 import NewUser from '../components/NewUser'
+import EditUser from '../components/EditUser'
 import Confirmation from '../components/Confirmation'
 import Autocomplete from '../components/Autocomplete'
 import UserInfo from '../components/UserInfo'
@@ -30,6 +31,7 @@ export default function View1(){
     const classes = useStyles()
     const [ userSelected, setUserSelected ] = useState()
     const [ hideAddUser, setHideAddUser ] = useState(false)
+    const [ hideEditUser, setHideEditUser ] = useState(false)
     const [ showConfirm, setShowConfirm ] = useState(false)
     const [ showUserInfo, setShowUserInfo ] = useState(false)
     const [ showItemsTable, setShowItemsTable ] = useState(false)
@@ -45,6 +47,10 @@ export default function View1(){
 
     emitter.addListener('addUser', () => {
         setHideAddUser(true)
+    })
+
+    emitter.addListener('editUser', () => {
+        setHideEditUser(true)
     })
 
     emitter.addListener('confirmMessage', (message) => {
@@ -68,10 +74,27 @@ export default function View1(){
             }
             return info
         })
-        .then(setUserInfo)
+        .then(async e => {
+            setUserInfo(e)
+            let userDetails= {
+                name: selectedUser,
+                tlf: e.tlf,
+                email: e.email,
+                clubCode: e.clubCode
+            }
+            return userDetails
+        })
+        .then(StoreUser)
         setUserSelected(selectedUser)
         setShowItemsTable(true)
     })
+
+    const StoreUser = (userDetails) => {
+        localStorage.setItem('name', userDetails.name)
+        localStorage.setItem('tlf', userDetails.tlf)
+        localStorage.setItem('email', userDetails.email)
+        localStorage.setItem('clubCode', userDetails.clubCode)
+    }
 
     const hideAddUserForm = () => {
         setHideAddUser(false)
@@ -83,8 +106,22 @@ export default function View1(){
         },1750)
     }
 
+    const hideEditUserForm = () => {
+        setHideEditUser(false)
+        setConfirmationMessage('Customer modified correctly')
+        setUpdate(!update)
+        setShowConfirm(true)
+        setTimeout(() => {
+            setShowConfirm(false)
+        },1750)
+    }
+
     const closeAddUserForm = () => {
         setHideAddUser(false)
+    }
+
+    const closeEditUserForm = () => {
+        setHideEditUser(false)
     }
 
     return(
@@ -102,6 +139,9 @@ export default function View1(){
                     </div>
                     <Flip left when={hideAddUser}>
                         {hideAddUser && (<NewUser onClick={hideAddUserForm} onClose={closeAddUserForm}/>)}
+                    </Flip>
+                    <Flip left when={hideEditUser}>
+                        {hideEditUser && (<EditUser onClick={hideEditUserForm} onClose={closeEditUserForm}/>)}
                     </Flip>
                 </Grid>
                 <Grid item xs={9}>

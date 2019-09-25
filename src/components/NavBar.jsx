@@ -38,6 +38,10 @@ export default function ButtonAppBar(props) {
         emitter.emit('addUser')
     }
 
+    const showEditUser = () => {
+      emitter.emit('editUser')
+  }
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -58,6 +62,15 @@ export default function ButtonAppBar(props) {
             </IconButton>
           ):(
               <div>
+                <IconButton
+            aria-label="account of current user"
+            aria-controls="primary-search-account-menu"
+            aria-haspopup="true"
+            color="inherit"
+            onClick={showEditUser}
+          >
+            <i class="fas fa-user-edit"/>
+          </IconButton>
                   <IconButton
             aria-label="account of current user"
             aria-controls="primary-search-account-menu"
