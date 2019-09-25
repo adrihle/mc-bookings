@@ -7,7 +7,8 @@ export default function MaterialTableDemo(props) {
   const [state, setState] = useState({
     columns: [
       { title: 'Date', field: 'date' },
-      { title: 'Quantity', field: 'quantity' }
+      { title: 'Quantity', field: 'quantity' },
+      { title: 'Receipt Number', field: 'receiptNumber', type: 'numeric' }
     ],
     data: []
   });

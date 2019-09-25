@@ -73,7 +73,7 @@ function getSuggestions(value, { showEmpty = false } = {}) {
   let count = 0;
 
   return inputLength === 0 && !showEmpty
-    ? []
+    ? suggestions
     : suggestions.filter(suggestion => {
         const keep =
           count < 5 && suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;

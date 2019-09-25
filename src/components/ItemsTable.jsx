@@ -71,6 +71,13 @@ export default function MaterialTableDemo(props) {
           animationDuration: '2s'
         }
       }}
+      onKeyDown={(ev) => {
+        console.log(`Pressed keyCode ${ev.key}`);
+        if (ev.key === 'Enter') {
+          // Do code here
+          ev.preventDefault();
+        }
+      }}
       editable={{
         onRowAdd: newData =>
           new Promise(resolve => {

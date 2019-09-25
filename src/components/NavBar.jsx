@@ -69,7 +69,7 @@ export default function ButtonAppBar(props) {
             color="inherit"
             onClick={showEditUser}
           >
-            <i class="fas fa-user-edit"/>
+            <i className="fas fa-user-edit"/>
           </IconButton>
                   <IconButton
             aria-label="account of current user"

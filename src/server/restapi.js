@@ -65,6 +65,21 @@ app.post('/auth', (req, res) => {
 
 //setup rest api for add customer
 const queryAddCustomer = 'INSERT INTO cb_customers set ?'
+const queryEditCustomer = 'UPDATE cb_customers SET info = ? WHERE name = ?'
+
+app.post('/editCustomer', (req, res) => {
+    const { name, tlf, email, clubCode } = req.body
+    const info = {
+        tlf,
+        email,
+        clubCode
+    }
+    pool.query(queryEditCustomer, [ JSON.stringify(info), name], (err, rows) => {
+        res.send(rows)
+    })
+})
+
+
 
 app.post('/addCustomer', (req, res) => {
     const { name, tlf, email, clubCode } = req.body
@@ -150,6 +165,9 @@ app.post('/getDeposits', (req, res) => {
         res.send(JSON.parse(e[0].deposits))
     })
 })
+
+
+
 
 
 
